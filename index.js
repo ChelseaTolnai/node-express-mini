@@ -44,8 +44,23 @@ server.get('/api/users/:id', (req, res) => {
         } 
         res.status(200).json(resp);
     })
-    .catch( () => {
+    .catch(() => {
         res.status(500).json({ error: 'The user information could not be retrieved.' })
+    });
+});
+
+server.delete('/api/users/:id', (req, res) => {
+    const userId = req.params.id;
+    db
+    .remove(userId)
+    .then(resp => {
+        if(!resp) {
+            res.status(404).json({ message: 'The user with the specified ID does not exist.' })
+        }
+        res.status(200).json({message: `Deleted User: ${userId}`});
+    })
+    .catch(() => {
+        res.status(500).json({ error: 'The user could not be removed' })
     });
 });
 
