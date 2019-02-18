@@ -23,4 +23,15 @@ server.post('/api/users', (req, res) => {
     }
 });
 
+server.get('/api/users', (req, res) => {
+    db
+    .find()
+    .then(resp => {
+        res.status(200).json(resp)
+    })
+    .catch(() => {
+        res.status(500).json({ error: 'The users information could not be retrieved.' })
+    });
+});
+
 server.listen(8000, () => console.log('API running on port 8000'));
